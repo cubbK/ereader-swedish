@@ -4,4 +4,5 @@ from . import views
 
 urlpatterns = [
     path("", views.index, name="index"),
+    path("upload/", views.upload_epub, name="upload_epub"),
 ]
