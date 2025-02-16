@@ -5,6 +5,7 @@ from .models import EpubText
 import pypandoc
 from django.http import HttpResponse
 import tempfile
+import os
 
 
 def index(request):
@@ -22,8 +23,11 @@ def upload_epub(request):
                     tmp_file.write(chunk)
                 tmp_file_path = tmp_file.name
 
-            # Convert EPUB to text using pypandoc
-            output = pypandoc.convert_file(tmp_file_path, 'plain', format='epub')
+            # Path to the filter script
+            filter_script = os.path.join(os.path.dirname(__file__), './remove_images.py')
+
+            # Convert EPUB to text using pypandoc with the filter script
+            output = pypandoc.convert_file(tmp_file_path, 'plain', format='epub', extra_args=['--filter', filter_script])
             EpubText.objects.create(user=request.user, title=epub_file.name, text=output)
             return redirect('index')
     else:
