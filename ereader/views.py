@@ -48,11 +48,8 @@ def upload_epub(request):
                         chunks[i] = chunks[i][:last_space + 1]
             
             # Create EpubBook instance
-            book = EpubText.objects.create(user=request.user, title=epub_file.name)
-            
-            # Create EpubText instances for each chunk
-            for chunk in chunks:
-                EpubText.objects.create(book=book, text=chunk)
+            book = EpubText.objects.create(user=request.user, title=epub_file.name, text_chunks=chunks)
+        
             
             return redirect('index')
     else:

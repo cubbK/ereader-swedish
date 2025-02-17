@@ -1,8 +1,27 @@
 {% extends "base_generic.html" %} {% block content %}
-<h1>Your Books</h1>
-<ul>
+<h1 class="text-2xl font-bold mb-4">Your Books</h1>
+<div
+  class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+>
   {% for book in books %}
-  <li>{{ book.title }} <a href="/ereader/reader/{{ book.id }}">read</a></li>
+  <div
+    class="bg-solarized-content shadow-md rounded-lg p-4 flex flex-col justify-between h-80"
+  >
+    <div>
+      <h2
+        class="text-xl font-semibold text-solarized-base w-full overflow-hidden h-28 overflow-ellipsis"
+      >
+        {{ book.title }}
+      </h2>
+    </div>
+    <div class="mt-4">
+      <a
+        href="/ereader/reader/{{ book.id }}"
+        class="text-solarized-highlight hover:text-solarized-highlight"
+        >Read</a
+      >
+    </div>
+  </div>
   {% endfor %}
-</ul>
+</div>
 {% endblock %}
