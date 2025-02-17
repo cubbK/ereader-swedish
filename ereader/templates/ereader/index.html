@@ -1,0 +1,8 @@
+{% extends "base_generic.html" %} {% block content %}
+<h1>Your Books</h1>
+<ul>
+  {% for book in books %}
+  <li>{{ book.title }} <a href="/ereader/reader/{{ book.id }}">read</a></li>
+  {% endfor %}
+</ul>
+{% endblock %}

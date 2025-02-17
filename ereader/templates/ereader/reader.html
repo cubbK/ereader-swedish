@@ -1,0 +1,8 @@
+{% extends "base_generic.html" %} {% block content %}
+<h1>{{ book.title }}</h1>
+<div>
+  {% for chunk in chunks %}
+  <pre>{{ chunk|safe }}</pre>
+  {% endfor %}
+</div>
+{% endblock %}
