@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +21,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-%#5ocm$wx!)db9xg^cpa41kizf!x-u81%c9q2j&#!w)xsl973^"
+SECRET_KEY = os.getenv(
+    "DJANGO_SECRET_KEY",
+    "django-insecure-%#5ocm$wx!)db9xg^cpa41kizf!x-u81%c9q2j&#!w)xsl973^",
+)
+
+# Add this line to include your production domain in the CSRF trusted origins
+CSRF_TRUSTED_ORIGINS = ["https://ereader-swedish.fly.dev"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False if os.getenv("PRODUCTION") == "true" else True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["ereader-swedish.fly.dev"]
 
 
 # Application definition
@@ -91,15 +98,26 @@ WSGI_APPLICATION = "website.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "OPTIONS": {
-            "service": "my_service",
-            "passfile": ".my_pgpass",
-        },
+if os.getenv("PRODUCTION") == "true":
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "OPTIONS": {
+                "service": "prod",
+                "password": os.getenv("DB_PASSWORD"),
+            },
+        }
     }
-}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "OPTIONS": {
+                "service": "local",
+                "password": os.getenv("DB_PASSWORD") or "",
+            },
+        }
+    }
 
 
 # Password validation
