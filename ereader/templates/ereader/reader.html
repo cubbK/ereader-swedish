@@ -1,5 +1,5 @@
 {% extends "base_generic.html" %} {% block content %}
-<h1>{{ book.title }}</h1>
+<h1 class="text-4xl font-bold mb-4">{{ book.title }}</h1>
 <div>
   {% for chunk in chunks %}
   <pre style="white-space: pre-wrap">{{ chunk }}</pre>
