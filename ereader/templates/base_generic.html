@@ -84,6 +84,16 @@
     </style>
   </head>
   <body class="bg-solarized-base text-solarized-base">
+    <script>
+      function handleReadClick(event) {
+        event.preventDefault();
+        const button = event.target;
+        button.innerText = "Transforming...";
+        button.disabled = true;
+        const url = button.getAttribute("data-url");
+        window.location.href = url;
+      }
+    </script>
     <div class="container mx-auto p-4">
       <nav
         class="bg-solarized-content shadow-md rounded-lg p-4 mb-6 flex justify-between items-center"

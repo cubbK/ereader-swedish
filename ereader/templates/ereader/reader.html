@@ -1,24 +1,28 @@
-{% extends "base_generic.html" %} {% block content %}
+{% extends "base_generic.html" %} {% block content %} {% if chunk_id == 0 %}
 <h1 class="text-4xl font-bold mb-4">{{ book.title }}</h1>
+{% endif %}
 <div>
-  <h2 class="text-2xl font-bold mb-4">Original Chunk</h2>
-  <pre style="white-space: pre-wrap">{{ original_chunk }}</pre>
-  <h2 class="text-2xl font-bold mb-4">Translated Chunk</h2>
+  <!-- <h2 class="text-2xl font-bold mb-4">Original Chunk</h2> -->
+  <!-- <pre style="white-space: pre-wrap">{{ original_chunk }}</pre> -->
   <pre style="white-space: pre-wrap">{{ translated_chunk }}</pre>
 </div>
 <div class="mt-4 flex gap-4">
   {% if chunk_id > 0 %}
-  <a
-    href="{% url 'reader' book.id chunk_id|add:-1 %}"
+  <button
+    data-url="{% url 'reader' book.id chunk_id|add:-1 %}"
     class="btn btn-primary text-solarized-highlight font-bold py-2 px-4 rounded"
-    >Previous Page</a
+    onclick="handleReadClick(event)"
   >
+    Previous Page
+  </button>
   {% endif %} {% if chunk_id < book.text_chunks|length %}
-  <a
-    href="{% url 'reader' book.id chunk_id|add:1 %}"
+  <button
+    data-url="{% url 'reader' book.id chunk_id|add:1 %}"
     class="btn btn-primary text-solarized-highlight font-bold py-2 px-4 rounded"
-    >Next Page</a
+    onclick="handleReadClick(event)"
   >
+    Next Page
+  </button>
   {% endif %}
 </div>
 {% endblock %}
