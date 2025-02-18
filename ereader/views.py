@@ -57,7 +57,10 @@ def upload_epub(request):
     return render(request, 'ereader/upload_epub.html', {'form': form})
 
 @login_required
-def reader(request, book_id):
+def reader(request, book_id, chunk_id):
     book = get_object_or_404(EpubText, id=book_id, user=request.user)
-    chunks = book.text_chunks
-    return render(request, 'ereader/reader.html', {'book': book, 'chunks': chunks})
+    if chunk_id < 0 or chunk_id >= len(book.text_chunks):
+        return HttpResponse("Invalid chunk ID", status=400)
+    original_chunk = book.text_chunks[chunk_id]
+    translated_chunk = book.text_chunks_translated[chunk_id] if chunk_id < len(book.text_chunks_translated) else ""
+    return render(request, 'ereader/reader.html', {'book': book, 'original_chunk': original_chunk, 'translated_chunk': translated_chunk})
