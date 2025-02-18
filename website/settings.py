@@ -34,6 +34,9 @@ DEBUG = False if os.getenv("PRODUCTION") == "true" else True
 
 ALLOWED_HOSTS = ["ereader-swedish.fly.dev"]
 
+if DEBUG:
+    ALLOWED_HOSTS.append("127.0.0.1")
+
 
 # Application definition
 
@@ -63,6 +66,7 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 LOGIN_REDIRECT_URL = "/ereader"
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
