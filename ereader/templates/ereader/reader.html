@@ -1,5 +1,5 @@
 {% extends "base_generic.html" %} {% block content %} {% if chunk_id == 0 %}
-<h1 class="text-4xl font-bold mb-4">{{ book.title }}</h1>
+<h1 class="break-words text-4xl font-bold mb-4">{{ book.title }}</h1>
 {% endif %}
 <div>
   <!-- <h2 class="text-2xl font-bold mb-4">Original Chunk</h2> -->
@@ -25,4 +25,6 @@
   </button>
   {% endif %}
 </div>
-{% endblock %}
+{% if chunk_id != 0 %}
+<h1 class="break-words mb-4">{{ book.title }}</h1>
+{% endif %} {% endblock %}
