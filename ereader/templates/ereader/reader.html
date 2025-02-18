@@ -25,6 +25,9 @@
   </button>
   {% endif %}
 </div>
+<div class="mt-4">
+  <p>Page {{ chunk_id|add:1 }} of {{ book.text_chunks|length }}</p>
+</div>
 {% if chunk_id != 0 %}
 <h1 class="break-words mb-4">{{ book.title }}</h1>
 {% endif %} {% endblock %}
