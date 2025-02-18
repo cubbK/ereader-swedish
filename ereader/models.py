@@ -8,3 +8,4 @@ class EpubText(models.Model):
     text_chunks = ArrayField(models.TextField(), blank=True, default=list)
     text_chunks_translated = ArrayField(models.TextField(), blank=True, default=list)
     uploaded_at = models.DateTimeField(auto_now_add=True)
+    last_read_chunk = models.IntegerField(default=0)

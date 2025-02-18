@@ -14,7 +14,7 @@
     </div>
     <div class="mt-4">
       <a
-        href="/ereader/reader/{{ book.id }}"
+        href="{% url 'reader' book.id book.last_read_chunk %}"
         class="text-solarized-highlight hover:text-solarized-highlight"
         >Read</a
       >

@@ -63,4 +63,9 @@ def reader(request, book_id, chunk_id):
         return HttpResponse("Invalid chunk ID", status=400)
     original_chunk = book.text_chunks[chunk_id]
     translated_chunk = book.text_chunks_translated[chunk_id] if chunk_id < len(book.text_chunks_translated) else ""
-    return render(request, 'ereader/reader.html', {'book': book, 'original_chunk': original_chunk, 'translated_chunk': translated_chunk})
+    
+    # Save the last read chunk ID
+    book.last_read_chunk = chunk_id
+    book.save()
+    
+    return render(request, 'ereader/reader.html', {'book': book, 'original_chunk': original_chunk, 'translated_chunk': translated_chunk, 'chunk_id': chunk_id})
