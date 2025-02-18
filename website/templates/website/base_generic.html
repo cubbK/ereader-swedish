@@ -1,0 +1,98 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}My Site{% endblock %}</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      pre {
+        white-space: pre-wrap;
+      }
+      .bg-solarized-base {
+        background-color: #fdf6e3;
+      }
+      .text-solarized-base {
+        color: #657b83;
+      }
+      .text-solarized-highlight {
+        color: #268bd2;
+      }
+      .hover\:text-solarized-highlight:hover {
+        color: #2aa198;
+      }
+      .bg-solarized-content {
+        background-color: #eee8d5;
+      }
+      .text-solarized-content {
+        color: #586e75;
+      }
+      .bg-teracotta-tile {
+        background-image: url("{% static 'ereader/tile1.png' %}");
+        background-size: cover;
+        position: relative;
+      }
+      .bg-teracotta-tile2 {
+        background-image: url("{% static 'ereader/tile2.png' %}");
+        background-size: cover;
+        position: relative;
+      }
+      .bg-teracotta-tile::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(
+          253,
+          246,
+          227,
+          0.75
+        ); /* Solarized Light base color with 80% opacity */
+        z-index: 1;
+      }
+      .bg-teracotta-tile > * {
+        position: relative;
+        z-index: 2;
+      }
+      .bg-teracotta-tile2::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(
+          253,
+          246,
+          227,
+          0.75
+        ); /* Solarized Light base color with 80% opacity */
+        z-index: 1;
+      }
+      .bg-teracotta-tile2 > * {
+        position: relative;
+        z-index: 2;
+      }
+      .bg-solarized-highlight {
+        background-color: #268bd2;
+      }
+      .bg-solarized-highlight-dark {
+        background-color: #2aa198;
+      }
+    </style>
+  </head>
+  <body class="bg-solarized-base text-solarized-base">
+    <div class="container mx-auto p-4 max-w-screen-md">
+      <div
+        class="bg-solarized-content shadow-md rounded-lg p-6 text-solarized-content"
+      >
+        {% block content %} {% endblock %}
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,49 @@
+{% extends "website/base_generic.html" %} {% block content %}
+<h1 class="text-3xl font-bold mb-4">Ereader Easy Swedish 🇸🇪</h1>
+<p class="mb-4 text-xl">Upload *any* epub book and read it in easy Swedish.</p>
+<p class="mb-4">
+  When reading normal Swedish books is too hard or/and your favorite book is not
+  available in Swedish
+</p>
+<a
+  href="{% url 'index' %}"
+  class="bg-solarized-highlight text-white font-bold py-2 px-4 rounded hover:bg-solarized-highlight-dark"
+  >Go to E-Reader</a
+>
+
+<div class="mt-8 grid grid-cols-2 gap-4">
+  <div>
+    <h2 class="text-2xl font-semibold mb-2">Original English</h2>
+    <p class="mb-2 font-mono">
+      The town studio of Signor Jacobelli faced the west. It was situated on the
+      top floor of an old eight-storied building in the West Fifties. Thirty
+      years ago this had been given over entirely to studios, but now it was
+      broken up into a more profitable mêlée of semi-commercial establishments
+      and light-housekeeping apartments.
+    </p>
+    <p class="mb-2 font-mono">
+      The signor, having no doubt the Old-World propensity for permanency, had
+      maintained his studio here for over twenty years, without regard for the
+      changing conditions around him, if indeed he were even conscious of them.
+      His own immediate outlook and environment had remained the same.
+    </p>
+  </div>
+  <div>
+    <h2 class="text-2xl font-semibold mb-2">Swedish Translation</h2>
+    <p class="mb-2 font-mono">
+      Signor Jacobelli hade en ateljé högst upp i ett gammalt hus med åtta
+      våningar. För trettio år sedan var huset fullt av konstnärer, men nu fanns
+      där både butiker och lägenheter.
+    </p>
+    <p class="mb-2 font-mono">
+      Jacobelli hade haft sin ateljé där i över tjugo år. Han tänkte inte på att
+      området förändrades. För honom var allt som vanligt.
+    </p>
+  </div>
+</div>
+<div>
+  Free of charge. A
+  <a href="https://github.com/cubbK" class="text-solarized-highlight">cubbk</a>
+  project. Part of a multi project swedish self learning idea list.
+</div>
+{% endblock %}
