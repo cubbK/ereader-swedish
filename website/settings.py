@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "django_db_prefix",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -44,6 +45,8 @@ INSTALLED_APPS = [
     "ereader",
     "website",
 ]
+
+DB_PREFIX = "swedish_reader_"
 
 SITE_ID = 1
 
