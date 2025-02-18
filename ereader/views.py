@@ -7,17 +7,19 @@ from django.http import HttpResponse
 import tempfile
 import os
 from openai import OpenAI
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login, authenticate
 
 client = OpenAI()
 
 
-@login_required
+@login_required(login_url="/ereader/login/")
 def index(request):
     books = EpubText.objects.filter(user=request.user)
     return render(request, "ereader/index.html", {"books": books})
 
 
-@login_required
+@login_required(login_url="/ereader/login/")
 def upload_epub(request):
     if request.method == "POST":
         form = EpubUploadForm(request.POST, request.FILES)
@@ -70,7 +72,7 @@ def upload_epub(request):
     return render(request, "ereader/upload_epub.html", {"form": form})
 
 
-@login_required
+@login_required(login_url="/ereader/login/")
 def reader(request, book_id, chunk_id):
     book = get_object_or_404(EpubText, id=book_id, user=request.user)
     if chunk_id < 0 or chunk_id >= len(book.text_chunks):
@@ -132,3 +134,18 @@ def reader(request, book_id, chunk_id):
             "chunk_id": chunk_id,
         },
     )
+
+
+def register(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            username = form.cleaned_data.get("username")
+            password = form.cleaned_data.get("password1")
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            return redirect("/ereader/")
+    else:
+        form = UserCreationForm()
+    return render(request, "ereader/register.html", {"form": form})
