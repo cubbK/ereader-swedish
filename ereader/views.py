@@ -59,6 +59,5 @@ def upload_epub(request):
 @login_required
 def reader(request, book_id):
     book = get_object_or_404(EpubText, id=book_id, user=request.user)
-    print(book.text_chunks)
     chunks = book.text_chunks
     return render(request, 'ereader/reader.html', {'book': book, 'chunks': chunks})

@@ -1,7 +1,12 @@
 {% extends "base_generic.html" %} {% block content %}
-<h2>Upload EPUB</h2>
-<form method="post" enctype="multipart/form-data">
+<h2 class="text-2xl font-bold mb-4">Upload EPUB</h2>
+<form method="post" enctype="multipart/form-data" class="space-y-4">
   {% csrf_token %} {{ form.as_p }}
-  <button type="submit">Upload</button>
+  <button
+    type="submit"
+    class="bg-solarized-highlight text-white font-bold py-2 px-4 rounded hover:bg-solarized-highlight-dark"
+  >
+    Upload
+  </button>
 </form>
 {% endblock %}

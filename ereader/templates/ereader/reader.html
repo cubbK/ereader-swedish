@@ -2,7 +2,7 @@
 <h1>{{ book.title }}</h1>
 <div>
   {% for chunk in chunks %}
-  <pre>{{ chunk|safe }}</pre>
+  <pre style="white-space: pre-wrap">{{ chunk }}</pre>
   {% endfor %}
 </div>
 {% endblock %}
