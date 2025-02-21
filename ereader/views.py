@@ -79,46 +79,38 @@ def reader(request, book_id, chunk_id):
         return HttpResponse("Invalid chunk ID", status=400)
     original_chunk = book.text_chunks[chunk_id]
 
-    # Check if the translation exists
-    if chunk_id < len(book.text_chunks_translated):
-        translated_chunk = book.text_chunks_translated[chunk_id]
-    else:
-        previous_text = (
-            book.text_chunks[chunk_id - 1][-len(book.text_chunks[chunk_id - 1]) // 4 :]
-            if chunk_id > 0
-            else ""
-        )
-        after_text = (
-            book.text_chunks[chunk_id + 1][: len(book.text_chunks[chunk_id + 1]) // 4]
-            if chunk_id < len(book.text_chunks) - 1
-            else ""
-        )
+    previous_text = (
+        book.text_chunks[chunk_id - 1][-len(book.text_chunks[chunk_id - 1]) // 4 :]
+        if chunk_id > 0
+        else ""
+    )
+    after_text = (
+        book.text_chunks[chunk_id + 1][: len(book.text_chunks[chunk_id + 1]) // 4]
+        if chunk_id < len(book.text_chunks) - 1
+        else ""
+    )
 
-        promt = f"""
+    promt = f"""
             I want to translate this part of a book text to swedish. Translate to EASY swedish. Make the sentence structure easy. Make the words easy. Simplify it to A1 level while maintaining the story meaning. output ONLY the translation. Use the previous text and after text to understand the context. previous text: "{previous_text}" after text: "{after_text}" text to translate: $BEGIN_TEXT${original_chunk}$END_TEXT$ " DO NOT SKIP ANY TEXT INSIDE $BEGIN_TEXT$ and $END_TEXT$
-        """
+    """
 
-        # Translate the chunk using OpenAI
-        response = client.chat.completions.create(
-            model="gpt-4o-mini",
-            messages=[
-                {
-                    "role": "user",
-                    "content": promt,
-                }
-            ],
-            response_format={"type": "text"},
-            temperature=1,
-            max_completion_tokens=3000,
-            top_p=1,
-            frequency_penalty=0,
-            presence_penalty=0,
-        )
-        translated_chunk = response.choices[0].message.content
-
-        # Save the translation in the database
-        book.text_chunks_translated.append(translated_chunk)
-        book.save()
+    # Translate the chunk using OpenAI
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {
+                "role": "user",
+                "content": promt,
+            }
+        ],
+        response_format={"type": "text"},
+        temperature=1,
+        max_completion_tokens=3000,
+        top_p=1,
+        frequency_penalty=0,
+        presence_penalty=0,
+    )
+    translated_chunk = response.choices[0].message.content
 
     # Save the last read chunk ID
     book.last_read_chunk = chunk_id
