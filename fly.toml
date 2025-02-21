@@ -10,7 +10,7 @@ console_command = '/code/manage.py shell'
 [build]
 
 [deploy]
-  release_command = 'python manage.py migrate --noinput'
+  release_command = 'sh -c "python manage.py migrate --noinput && python manage.py collectstatic --noinput"'
 
 [env]
   PORT = '8000'
@@ -29,5 +29,5 @@ console_command = '/code/manage.py shell'
   cpus = 1
 
 [[statics]]
-  guest_path = '/code/ereader/'
-  url_prefix = '/ereader/'
+  guest_path = '/code/staticfiles'
+  url_prefix = '/static'
