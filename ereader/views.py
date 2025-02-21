@@ -95,7 +95,7 @@ def reader(request, book_id, chunk_id):
         )
 
         promt = f"""
-            I want to translate this part of a book text to swedish. Translate to EASY swedish. Make the sentence structure easy. Make the words easy. Simplify it to A1 level while maintaining the story meaning. output ONLY the translation. Use the previous text and after text to understand the context. previous text: "{previous_text}" after text: "{after_text}" text to translate: "{original_chunk}"
+            I want to translate this part of a book text to swedish. Translate to EASY swedish. Make the sentence structure easy. Make the words easy. Simplify it to A1 level while maintaining the story meaning. output ONLY the translation. Use the previous text and after text to understand the context. previous text: "{previous_text}" after text: "{after_text}" text to translate: $BEGIN_TEXT${original_chunk}$END_TEXT$ " DO NOT SKIP ANY TEXT INSIDE $BEGIN_TEXT$ and $END_TEXT$
         """
 
         # Translate the chunk using OpenAI
