@@ -4,6 +4,8 @@ Upload _any_ epub book and read it in easy Swedish.
 
 When reading normal Swedish books is too hard or/and your favorite book is not available in Swedish
 
+[https://ereader-swedish.fly.dev/](https://ereader-swedish.fly.dev/)
+
 ## Run locally
 
 ```
