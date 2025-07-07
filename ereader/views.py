@@ -15,7 +15,7 @@ client = OpenAI()
 
 @login_required(login_url="/ereader/login/")
 def index(request):
-    books = EpubText.objects.filter(user=request.user)
+    books = EpubText.objects.filter(user=request.user).order_by("-uploaded_at")
     return render(request, "ereader/index.html", {"books": books})
 
 

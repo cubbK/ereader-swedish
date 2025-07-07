@@ -21,6 +21,9 @@
       >
         Read
       </button>
+      <div>
+        Page: {{ book.last_read_chunk }} of {{ book.text_chunks|length }}
+      </div>
     </div>
   </div>
   {% endfor %}
