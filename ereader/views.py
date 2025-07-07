@@ -1,3 +1,4 @@
+import re
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .forms import EpubUploadForm
@@ -44,22 +45,31 @@ def upload_epub(request):
                 extra_args=["--filter", filter_script],
             )
 
-            # Split the output into chunks of around 2000 characters
-            chunk_size = 2000
+            def _chunk_book(output):
+                chunks = []
+                paragraphs = re.split(r"\n\s*\n", output)
 
-            def chunk_generator(text, size):
-                for i in range(0, len(text), size):
-                    yield text[i : i + size]
+                paragraphs = list(
+                    map(
+                        lambda p: re.sub(
+                            r"\s+", " ", re.sub(r"--+", "", re.sub(r"\n", " ", p))
+                        ).strip(),  # Remove dash sequences and newlines
+                        paragraphs,
+                    )
+                )
 
-            chunks = list(chunk_generator(output, chunk_size))
+                chunk_len = 0
+                chunk = ""
+                for paragraph in paragraphs:
+                    chunk += paragraph + "\n"
+                    chunk_len += len(paragraph)
+                    if chunk_len > 2000:
+                        chunks.append(chunk)
+                        chunk = ""
+                        chunk_len = 0
+                return chunks
 
-            # Ensure chunks are split by word
-            for i in range(len(chunks) - 1):
-                if not chunks[i].endswith(" "):
-                    last_space = chunks[i].rfind(" ")
-                    if last_space != -1:
-                        chunks[i + 1] = chunks[i][last_space + 1 :] + chunks[i + 1]
-                        chunks[i] = chunks[i][: last_space + 1]
+            chunks = _chunk_book(output)
 
             # Create EpubBook instance
             book = EpubText.objects.create(
